@@ -20,9 +20,11 @@ export default function Home() {
 
   return (
     <div className={styles.wrapper}>
-      <header className={styles.header}>
+      <header className={styles.header} role="banner">
         <span className={styles.headerBrand}>puia.me</span>
-        <span className={styles.headerDate}>{dateString}</span>
+        <time className={styles.headerDate} dateTime={now.toISOString()}>
+          {dateString}
+        </time>
       </header>
 
       <main className={styles.hero}>
@@ -40,8 +42,12 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a href="mailto:puia@puia.me" className={styles.footerEmail}>
+      <footer className={styles.footer} role="contentinfo">
+        <a
+          href="mailto:puia@puia.me"
+          className={styles.footerEmail}
+          aria-label="Email Puia Chhakchhuak"
+        >
           puia@puia.me
         </a>
         <span className={styles.footerCta}>Write anytime</span>
