@@ -104,11 +104,21 @@
 }
 
 /* Responsive */
+@media (max-width: 640px) {
+  .title {
+    font-size: clamp(36px, 11vw, 56px);
+  }
+}
+
 @media (max-width: 480px) {
   .header,
   .hero,
   .footer {
     padding-left: 24px;
     padding-right: 24px;
+  }
+
+  .title {
+    font-size: clamp(32px, 10vw, 44px);
   }
 }
