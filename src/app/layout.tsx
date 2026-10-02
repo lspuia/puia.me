@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Archivo } from "next/font/google";
+import { Archivo, Sedgwick_Ave } from "next/font/google";
 import "./globals.css";
 
 const archivo = Archivo({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-archivo",
+});
+
+const sedgwickAve = Sedgwick_Ave({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-sedgwick",
 });
 
 export const metadata: Metadata = {
@@ -19,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Liansangpuia Chhakchhuak",
     description:
-      "AI powered UI/UX/WEB DEVELOPMENT",
+      "Human-Centred Design - Engineered with AI.",
     url: "https://puia.me",
     siteName: "puia.me",
     locale: "en_US",
@@ -29,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Liansangpuia Chhakchhuak",
     description:
-      "AI powered UI/UX/WEB DEVELOPMENT",
+      "Human-Centred Design - Engineered with AI.",
   },
   robots: {
     index: true,
@@ -43,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={archivo.variable}>
+    <html lang="en" className={`${archivo.variable} ${sedgwickAve.variable}`}>
       <body>{children}</body>
     </html>
   );

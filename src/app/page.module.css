@@ -1,25 +1,133 @@
 .wrapper {
+  --pad: 40px;
+  --col: calc(100vw - 2 * var(--pad));
+  --overhead: 244px;
+
+  /* Artwork: cover the screen, but never zoom in past where both faces fit */
+  --art-w: max(100vw, min(90.15svh, 160vw));
+  --art-h: calc(var(--art-w) * 1.1093);
+  /* How far it hangs below the bottom edge; keeps the chins ~84% down */
+  --art-bottom: min(
+    0px,
+    max(calc(100svh - var(--art-h)), calc(16svh - var(--art-h) * 0.284))
+  );
+  /* Where the two heads start, measured from the top of the screen */
+  --head-top: calc(100svh - var(--art-bottom) - var(--art-h) * 0.48);
+  --hair-top: calc(100svh - var(--art-bottom) - var(--art-h) * 0.405);
+
+  /* The text has to end above this line */
+  --limit: var(--head-top);
+  /* Name size: fill the column, but stay above the faces */
+  --fs: clamp(
+    24px,
+    min(
+      calc(var(--col) / 6.5),
+      calc((var(--limit) - var(--overhead)) / 1.96)
+    ),
+    140px
+  );
+
+  position: relative;
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
+  overflow: clip;
   background: var(--color-bg);
   color: var(--color-text);
+  font-family: var(--font-sedgwick), "Sedgwick Ave", cursive;
+}
+
+/* Paper wash behind the header, charcoal shade behind the footer */
+.wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-bg) 90%, transparent),
+      transparent 110px
+    ),
+    linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-text) 85%, transparent),
+      transparent 130px
+    );
+  pointer-events: none;
+}
+
+/* Paper grain over the whole page */
+.wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 -0.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Background artwork, dissolving into the paper at the top */
+.art {
+  position: absolute;
+  z-index: 0;
+  left: calc((100vw - var(--art-w)) / 2);
+  bottom: var(--art-bottom);
+  width: var(--art-w);
+  height: var(--art-h);
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 9%);
+  mask-image: linear-gradient(to bottom, transparent, #000 9%);
+}
+
+.photo {
+  object-fit: cover;
+}
+
+/* Hand-drawn lines */
+.divider,
+.rule {
+  display: block;
+  width: 100%;
+  filter: url(#charcoal-line);
+}
+
+.divider {
+  position: absolute;
+  left: 0;
+  height: 8px;
+}
+
+.header .divider {
+  bottom: -4px;
+  fill: var(--color-neutral-600);
+}
+
+.footer .divider {
+  top: -4px;
+  fill: var(--color-bg);
+  opacity: 0.7;
 }
 
 /* Header */
 .header {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: 24px 40px;
-  border-bottom: 2px solid var(--color-divider);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.headerBrand {
-  font-weight: 600;
+  padding: 18px var(--pad);
+  font-size: 22px;
+  line-height: 1.2;
 }
 
 .headerDate {
@@ -28,31 +136,43 @@
 
 /* Hero */
 .hero {
+  position: relative;
+  z-index: 2;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 64px 40px;
+  padding: 28px var(--pad) 0;
 }
 
 .heroInner {
-  max-width: 1100px;
+  position: relative;
+  width: var(--col);
+}
+
+/* Whitewashed patch of wall for the text to sit on */
+.heroInner::before {
+  content: "";
+  position: absolute;
+  inset: -160px -48px -24px calc(-1 * var(--pad) - 48px);
+  z-index: -1;
+  background: var(--color-bg);
+  opacity: 0.9;
+  filter: blur(34px);
 }
 
 .kicker {
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-accent-700);
-  margin-bottom: 28px;
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--color-neutral-600);
+  margin-bottom: 12px;
 }
 
 .title {
+  font-family: var(--font-archivo), "Archivo", system-ui, sans-serif;
   font-weight: 700;
-  font-size: clamp(56px, 10vw, 140px);
+  font-size: var(--fs);
   line-height: 0.98;
   letter-spacing: -0.02em;
   margin: 0;
+  filter: url(#charcoal);
 }
 
 .line1,
@@ -60,65 +180,145 @@
   display: block;
 }
 
-
 .rule {
-  height: 2px;
-  background: var(--color-accent);
-  margin: 40px 0;
+  height: 10px;
+  margin: 20px 0;
+  fill: var(--color-text);
 }
 
+/* The tagline is ~19em wide on one line */
 .intro {
-  font-size: clamp(18px, 2.2vw, 26px);
-  line-height: 1.45;
-  max-width: 34ch;
+  font-size: clamp(
+    13px,
+    min(calc(var(--col) / 19.4), calc(var(--fs) * 0.28)),
+    32px
+  );
+  line-height: 1.3;
+  white-space: nowrap;
   margin: 0;
 }
 
 /* Footer */
 .footer {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: 24px 40px;
-  border-top: 2px solid var(--color-divider);
+  padding: 18px var(--pad);
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--color-bg);
 }
 
 .footerEmail {
-  font-size: 15px;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  color: var(--color-text);
-  border-bottom: 2px solid var(--color-accent);
-  padding-bottom: 2px;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
 
 .footerEmail:hover {
-  color: var(--color-accent);
+  color: inherit;
+  opacity: 0.75;
 }
 
 .footerCta {
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-neutral-600);
+  opacity: 0.8;
 }
 
-/* Responsive */
+/* Wide screens: the faces span the width, so the text keeps to the left
+   of his head and may run down as far as her hair */
+@media (min-aspect-ratio: 6/5) {
+  .wrapper {
+    --col: calc(56vw - var(--pad));
+    --limit: var(--hair-top);
+  }
+}
+
+/* Smaller screens: tighter spacing */
 @media (max-width: 640px) {
+  .wrapper {
+    --overhead: 176px;
+  }
+
+  .header,
+  .footer {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    font-size: 19px;
+  }
+
+  .hero {
+    padding-top: 16px;
+  }
+
+  .heroInner::before {
+    bottom: -16px;
+  }
+
+  .kicker {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
   .title {
-    font-size: clamp(36px, 11vw, 56px);
+    filter: url(#charcoal-small);
+  }
+
+  .rule {
+    height: 8px;
+    margin: 12px 0;
+  }
+
+  /* One line, sized to span the column like the name above it */
+  .intro {
+    font-size: max(12px, calc(var(--col) / 19.4));
   }
 }
 
 @media (max-width: 480px) {
+  .wrapper {
+    --pad: 24px;
+  }
+}
+
+/* Short screens: tighten everything so the text still clears the faces */
+@media (max-height: 520px) {
+  .wrapper {
+    --overhead: 128px;
+  }
+
   .header,
-  .hero,
   .footer {
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 17px;
+  }
+
+  .hero {
+    padding-top: 10px;
+  }
+
+  .heroInner::before {
+    bottom: -12px;
+  }
+
+  .kicker {
+    font-size: 15px;
+    margin-bottom: 6px;
   }
 
   .title {
-    font-size: clamp(32px, 10vw, 44px);
+    filter: url(#charcoal-small);
+  }
+
+  .rule {
+    height: 8px;
+    margin: 8px 0;
+  }
+
+  .intro {
+    font-size: clamp(12px, calc(var(--col) / 19.4), 16px);
   }
 }
