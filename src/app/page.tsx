@@ -16,6 +16,50 @@ function Stroke({ className }: { className: string }) {
   );
 }
 
+// Structured data so search engines read this as one person's profile page
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://puia.me/#website",
+      url: "https://puia.me",
+      name: "puia.me",
+      inLanguage: "en",
+      publisher: { "@id": "https://puia.me/#person" },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://puia.me/#webpage",
+      url: "https://puia.me",
+      name: "Liansangpuia Chhakchhuak — UI/UX Design & Web Development",
+      inLanguage: "en",
+      isPartOf: { "@id": "https://puia.me/#website" },
+      mainEntity: { "@id": "https://puia.me/#person" },
+      primaryImageOfPage: "https://puia.me/opengraph-image.jpg",
+    },
+    {
+      "@type": "Person",
+      "@id": "https://puia.me/#person",
+      name: "Liansangpuia Chhakchhuak",
+      givenName: "Liansangpuia",
+      familyName: "Chhakchhuak",
+      alternateName: "Puia Chhakchhuak",
+      url: "https://puia.me",
+      email: "mailto:puia@puia.me",
+      jobTitle: "UI/UX Designer & Web Developer",
+      description: "Human-Centred Design - Engineered with AI.",
+      knowsAbout: [
+        "UI design",
+        "UX design",
+        "Web development",
+        "Human-centred design",
+        "Artificial intelligence",
+      ],
+    },
+  ],
+};
+
 export default function Home() {
   const now = new Date();
   const months = [
@@ -36,6 +80,13 @@ export default function Home() {
 
   return (
     <div className={styles.wrapper}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+
       {/* Charcoal filters: wobble the edges, then knock out specks of grain */}
       <svg className={styles.defs} aria-hidden="true" focusable="false">
         <defs>
