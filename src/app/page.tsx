@@ -31,13 +31,12 @@ export default function Home() {
         <div className={styles.heroInner}>
           <div className={styles.kicker}>Personal domain</div>
           <h1 className={styles.title}>
-            <span className={styles.line1}>Puia</span>
+            <span className={styles.line1}>Liansangpuia</span>
             <span className={styles.line2}>Chhakchhuak</span>
           </h1>
           <div className={styles.rule}></div>
           <p className={styles.intro}>
-            Designer of interfaces, builder of front ends. Yes, that email was
-            really from me.
+            AI powered UI/UX/WEB DEVELOPMENT
           </p>
         </div>
       </main>
@@ -46,7 +45,7 @@ export default function Home() {
         <a
           href="mailto:puia@puia.me"
           className={styles.footerEmail}
-          aria-label="Email Puia Chhakchhuak"
+          aria-label="Email Liansangpuia Chhakchhuak"
         >
           puia@puia.me
         </a>

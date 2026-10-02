@@ -9,17 +9,17 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "Puia Chhakchhuak — Interface Designer & Front-End Developer",
+  title: "Liansangpuia Chhakchhuak — Interface Designer & Front-End Developer",
   description:
-    "Personal site of Puia Chhakchhuak. Designer of interfaces, builder of front ends.",
+    "Personal site of Liansangpuia Chhakchhuak. Designer of interfaces, builder of front ends.",
   metadataBase: new URL("https://puia.me"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Puia Chhakchhuak",
+    title: "Liansangpuia Chhakchhuak",
     description:
-      "Designer of interfaces, builder of front ends. Yes, that email was really from me.",
+      "AI powered UI/UX/WEB DEVELOPMENT",
     url: "https://puia.me",
     siteName: "puia.me",
     locale: "en_US",
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Puia Chhakchhuak",
+    title: "Liansangpuia Chhakchhuak",
     description:
-      "Designer of interfaces, builder of front ends. Yes, that email was really from me.",
+      "AI powered UI/UX/WEB DEVELOPMENT",
   },
   robots: {
     index: true,
