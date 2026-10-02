@@ -14,9 +14,8 @@ const sedgwickAve = Sedgwick_Ave({
   variable: "--font-sedgwick",
 });
 
-const title = "Liansangpuia Chhakchhuak — UI/UX Design & Web Development";
-const description =
-  "Liansangpuia (Puia) Chhakchhuak — AI-powered UI/UX design and web development. Human-centred design, engineered with AI.";
+const description = "Human-Centred Design - Engineered with AI.";
+const title = `Liansangpuia Chhakchhuak — ${description}`;
 
 // The share images come from opengraph-image.jpg and twitter-image.jpg
 export const metadata: Metadata = {
@@ -26,14 +25,6 @@ export const metadata: Metadata = {
   applicationName: "puia.me",
   authors: [{ name: "Liansangpuia Chhakchhuak", url: "https://puia.me" }],
   creator: "Liansangpuia Chhakchhuak",
-  keywords: [
-    "Liansangpuia Chhakchhuak",
-    "Puia Chhakchhuak",
-    "UI/UX design",
-    "web development",
-    "human-centred design",
-    "AI",
-  ],
   alternates: {
     canonical: "/",
   },
